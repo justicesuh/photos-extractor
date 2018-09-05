@@ -1,20 +1,18 @@
 from glob import glob
 import sys
 
-def get_formats(files):
-    '''
-    return list of formats present
-    '''
-    formats = []
-    for file in files:
-        if file.count('.') == 2:
-            ext = file[file.rindex('.') + 1:]
-            if ext not in formats:
-                formats.append(ext)
-    return formats
-
 if __name__ == '__main__':
-    files = map(str.lower, glob(sys.argv[1] + '/**', recursive=True))
-    formats = get_formats(files)
-    for fmt in formats:
-        print(fmt)
+    formats = ['jpeg', 'jpg', 'raw', 'png', 'gif', 'tiff', 'mp4', 'mov']
+    files = sum([glob(sys.argv[1] + '/**/*.' + f, recursive=True) for f in formats], [])
+
+    folders = []
+    for file in files:
+        if 'photoslibrary' in file:
+            file = file[file.index('photoslibrary') + 14:]
+        else:
+            file = file[file.index('Library') + 8:]
+        folder = file[:file.index('\\')]
+        if folder not in folders:
+            folders.append(folder)
+    for folder in folders:
+        print(folder)
