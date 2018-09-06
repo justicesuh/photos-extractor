@@ -1,7 +1,7 @@
-from glob import glob
 import os
-from shutil import copy2
 import sys
+from glob import glob
+from shutil import copy2
 
 def create_folder(folder):
     '''
@@ -46,10 +46,8 @@ if __name__ == '__main__':
     create_folder(dst)
 
     files = []
-    folders = ['Masters', 'Originals', 'Pictures']
-    formats = ['jpeg', 'jpg', 'raw', 'png', 'gif', 'tiff', 'mp4', 'mov']
-    for folder in folders:
-        for fmt in formats:
+    for folder in ['Masters', 'Originals', 'Pictures']:
+        for fmt in ['jpeg', 'jpg', 'raw', 'png', 'gif', 'tiff', 'mp4', 'mov']:
             print('Searching {} for *.{}'.format(folder, fmt))
             files.extend(glob('{}/**/{}/**/*.{}'.format(src, folder, fmt), recursive=True))
     num = len(files)
@@ -59,7 +57,7 @@ if __name__ == '__main__':
 
     for i, file in enumerate(files, 1):
         print('Copying file {} of {}'.format(i, num))
-        date = parse_date(file):
+        date = parse_date(file)
         if date:
             folder = os.path.join(dst, parse_date(file))
             create_folder(folder)
